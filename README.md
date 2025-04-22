@@ -11,6 +11,10 @@ There are other requirements for a good code, but we (still) do not have strict 
 
 Finally, this repo is work in progress (WIP), it is good to discuss the rules here, suggest improvements and participate on their creation.
 
+## Refactoring/conceptual changes in the project
+
+Every roadmap change in the project should be recorded. Use [decision.md](https://github.com/joelparkerhenderson/decision-record) for this purpose. 
+
 ## Project testing
 
 Writing of tests is a pain but sometimes with sweet reward. It is hard to say when tests are useful or necessary and where are a must. Try to identify these objectives:

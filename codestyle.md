@@ -4,11 +4,17 @@ As was mentioned in [README.md](README.md#quick-guide) every project is differen
 
 ## Tools
 
+Try to avoid ~~`print`~~, well-defined **logger** do the same job and prevent non-trivial amount of work before project completion.
+
 For maintaining 3rd party packages and Python version (pyenv vs. conda, pip, poetry, uv, ...) please be in sync with your supervisor and see [Non code components](#non-code-components).
 
 For API definitions please use [OpenApi specification](https://swagger.io/resources/open-api/)
 
 For testing use [pytest](https://docs.pytest.org/en/stable/)
+
+For versioning `*.ipynb` use [jupytext](https://jupytext.readthedocs.io/en/latest/)
+
+For config files use comments supporting language (e.g. yaml, json5).
 
 ## Folders structure
 
@@ -21,7 +27,7 @@ docker                  # Dockerfile, docker-compose.yaml
 documentation           # e.g. to the HW used in project, protocols
 notebooks               # fast prototyping notebooks
 openapi                 # API definitions
-src / {{package_name}}  # python code
+src / {{package_name}}  # python code (package name is better)
 tests                   # pytest tests
 .env.example            # default environment setup with possible variants for various machines
 pyproject.toml          # 3rd party dependencies declarations
