@@ -62,4 +62,4 @@ There are other components except the code which **require versioning** as well 
 - data - images, metadata, derived outputs
     - there are versioning tools for data like [DVC]([https://dvc.org](https://dvc.org/)) or DataChain
 - models - trained neural networks
-    - for this purpose is recommended to use [MLFlow]([https://mlflow.org](https://mlflow.org/)) or [WanDB](https://wandb.ai/site/)
+    - for this purpose is recommended to use [MLFlow]([https://mlflow.org](https://mlflow.org/)) or [Optuna](https://optuna.org)

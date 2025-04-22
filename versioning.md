@@ -9,6 +9,11 @@ TODO: unify naming convention between repos ... e.g.: underscore vs. hyphen, upp
 - bugfix branches
 
 # Pull requests
+
+- PR should be rather small so that superviser can review it easily.
+- PR should be created as soon as new branch, with WIP: status, withoout reviewer so it's clear what is being worked on.
+- After code review, there should be a stop for features. Any new code goes to a different branch stemming from the one being in review (so the developer is not blocked by the reviewer).
+
 Merging into master/main branch should go thru PR done by your supervisor
 Before you create PR run `pytest`, linter. Clean your debug messages.
 
