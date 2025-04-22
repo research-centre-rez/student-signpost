@@ -1,23 +1,32 @@
-In general there is [PEP 8](https://peps.python.org/pep-0008/). It is highly recommended to be PEP-8 compatible wherever is possible. If you want, use a linter to verify this. 
+In general there is [PEP 8](https://peps.python.org/pep-0008/). It is highly recommended to be PEP-8 compatible wherever is possible. If you want, use a linter to verify this. If you want to have an exception from PEP-8 specify (written) the reason (and ask chatGPT how to do this properly) - often you will see that the same think can be done differently.
 
-# Code structure guidelines
+As was mentioned in [README.md](README.md#quick-guide) every project is different. Therefore, code style will vary accordingly. Look in our [templates](templates.md) which you can use as project scaffold.
 
-First of all try to identify type of your project (the structure vary accordingly)
+## Tools
 
-1. Research or fast prototyping 
-    - i.e. mostly notebooks, generated charts and reports
-    - focus is on algorithms and approaches
-2. Model training, testing and deployment 
-    - testing of various architectures, hyper-parameter search, precision/recall/F1
-    - focus on models and their evaluation
-3. Script with CLI (Dockerized) 
-    - data & metadata processing with defined output format
-    - focus on the data, repeatability and reproducibility
-4. Backend API (Dockerized)
-    - focus on the API and code quality
-5. If you don’t know ask your supervisor.
+For maintaining 3rd party packages and Python version (pyenv vs. conda, pip, poetry, uv, ...) please be in sync with your supervisor and see [Non code components](#non-code-components).
 
-If your type is changed, please refactor the code accordingly. Look in our [templates](templates.md) which you can use as project scaffold.
+For API definitions please use [OpenApi specification](https://swagger.io/resources/open-api/)
+
+For testing use [pytest](https://docs.pytest.org/en/stable/)
+
+## Folders structure
+
+Keep your repo clean. Here is suggested high level repository structure:
+
+```bash
+.run / bin              # build scripts, generators, CLI confgurations etc.
+config                  # configuration files belongs here
+docker                  # Dockerfile, docker-compose.yaml
+documentation           # e.g. to the HW used in project, protocols
+notebooks               # fast prototyping notebooks
+openapi                 # API definitions
+src / {{package_name}}  # python code
+tests                   # pytest tests
+.env.example            # default environment setup with possible variants for various machines
+pyproject.toml          # 3rd party dependencies declarations
+README.md               # explains what is in the repo and how to use it
+```
 
 ## Non-code components
 
@@ -48,21 +57,3 @@ There are other components except the code which **require versioning** as well 
     - there are versioning tools for data like [DVC]([https://dvc.org](https://dvc.org/)) or DataChain
 - models - trained neural networks
     - for this purpose is recommended to use [MLFlow]([https://mlflow.org](https://mlflow.org/)) or [WanDB](https://wandb.ai/site/)
-
-## Folders structure
-
-Keep your repo clean. Here is suggested high level repository structure:
-
-```bash
-.run / bin              # build scripts, generators, CLI confgurations etc.
-config                  # configuration files belongs here
-docker                  # Dockerfile, docker-compose.yaml
-documentation           # e.g. to the HW used in project, protocols
-notebooks               # 
-openapi                 # API definitions
-src / {{package_name}}  # python code
-tests                   # pytest tests
-.env.example            # default environment setup with possible variants for various machines
-pyproject.toml          # 3rd party dependencies declarations
-README.md               # explains what is in the repo and how to use it
-```
