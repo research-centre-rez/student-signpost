@@ -14,7 +14,7 @@ docker run --user $(id -u):$(id -g)
 ```
 
 ### Data mounting
-We define standard for mounting configuration, inputs and outputs as well as what should be in the ouputs. For mounting use this docker params:
+We define standard for mounting configuration, inputs and outputs as well as what should be in the ouputs. For mounting use these docker params:
 ```
 -v /path/to/inputs/directory:/inputs:ro
 -v /path/to/output/directory:/outputs
