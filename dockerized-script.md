@@ -29,9 +29,12 @@ We define standard for mounting configuration, inputs and outputs as well as wha
    - Check env after each build in interactive mode `CMD ["/bin/bash"]`. 
    - Once everything is established (all dependencies finally installed and script is runnable) go to the command aggregation (apt install, pip install)
    - Do not forget to run tests before deployment (do a CI pipeline in Github actions where tests will be run)
-1) Use docker layers effectively (code should be included last)
+1) Use docker layers effectively (code should be included last, system packages first)
 2) Use /app folder for deploying the app
 3) Copy only files you need for the project run (if you have several scripts in your project create dockerfile for each)
+4) If you need to expose some port use different [template](templates.md) (dockerized backend API)
+
+### Example
 
 ```dockerfile
 FROM python:3.11-bookworm
