@@ -1,6 +1,6 @@
 ## Dockerized script (draft)
 
-To simplify the script usage there is good practice to cut off the code (packed into docker image) and the data and model (if used). Therefore, for the image we define standardization of these.
+To simplify the script usage there is good practice to split code, data and models (if used). Therefore, for a docker image we define standardization of these. Code is packed inside the image (`COPY` in `Dockerfile`), models and data are mounted via `docker run -v`. Both, the data and the model should be mounted read-only (`:ro`). Mount extra folder for the outputs (read+write).
 
 Other issue is the run of the image as a root user.
 
@@ -25,13 +25,19 @@ We define standard for mounting configuration, inputs and outputs as well as wha
 ### Dockerfile rules
 
 0) When you are creating the Dockerfile:
-   - Do it by dependency after dependency to prevent extensive rebuilds. 
-   - Check env after each build in interactive mode `CMD ["/bin/bash"]`. 
-   - Once everything is established (all dependencies finally installed and script is runnable) go to the command aggregation (apt install, pip install)
-   - Do not forget to run tests before deployment (do a CI pipeline in Github actions where tests will be run)
-1) Use docker layers effectively (code should be included last, system packages first)
-2) Use /app folder for deploying the app
-3) Copy only files you need for the project run (if you have several scripts in your project create dockerfile for each)
+   - Add dependencies one by one to prevent extensive rebuilds. Docker creates layers which means that everything successfully built in previous build is cached and cannot be builded again (especially downloading, building and installation of packages is very time consuming, do it gradually) 
+   - Check validity of conainer environment after each build (use interactive mode: put `CMD ["/bin/bash"]` at the end of `Dockerfile` and `-it` in `docker run` command) 
+   - Once everything is established (all dependencies finally installed and script is runnable) go to the command aggregation (apt install, pip install as in following example)
+   - Do not forget to run tests before deployment do a CI pipeline in Github actions where tests will be run
+     - PyTest - Take a look on these first: 
+       - pytest outside docker container - https://github.com/marketplace/actions/run-pytest
+       - pytest inside docker container - https://stackoverflow.com/questions/78075525/run-pytest-within-docker-container-while-running-github-actions-workflow)
+     - Test of the docker build - https://github.com/marketplace/actions/build-and-push-docker-images
+1) Use docker layers effectively. Layers (i.e. commands in `Dockerfile`) are reused up to the first layer where change in the output appears. This means that if you put your `COPY` before `apt install` or `pip install` then every change in your code requires reinstallation of packages. 
+   - the code `COPY` should be included last (because it is often changed)
+   - system packages should be at the beginning of the Docker file (relatively stable layer) 
+2) Use `/app` folder for deploying the app
+3) If you have multiple scripts inside one docker image use `ENTRYPOINT python` and give comprehensive documentaion to a user (README.md).  
 4) If you need to expose some port use different [template](templates.md) (dockerized backend API)
 
 ### Example
@@ -48,20 +54,9 @@ WORKDIR /app
 COPY docker/rod-growth/requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 
-# Copy only files you need
-
-# Configuration of the run. Config folder is mounted
-COPY config/rg_config.json /app/config/rg_config.json
-# Include the root package
-COPY palivo/__init__.py /app/palivo/__init__.py
-# Include the main package
-COPY palivo/rods_growth /app/palivo/rods_growth
-# Add utils of the project
-COPY palivo/utils/__init__.py /app/palivo/utils/__init__.py
-COPY palivo/utils/config_utils.py /app/palivo/utils/config_utils.py
-COPY palivo/utils/logger_tools.py /app/palivo/utils/logger_tools.py
-# Include your script
-COPY scripts/rods_growth_measurer.py /app/scripts/rods_growth_measurer.py
+# If you package wasn't installed in previous step (i.e. it is only script not a package)
+# NOTE: use .gitignore for all ignored files. Keep in mind, that the docker image should be as small as possible
+COPY . . 
 
 # Define where is your package deployed to the python
 ENV PYTHONPATH="/app"
