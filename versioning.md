@@ -17,6 +17,26 @@ TODO: unify naming convention between repos ... e.g.: underscore vs. hyphen, upp
 Merging into master/main branch should go thru PR done by your supervisor
 Before you create PR run `pytest`, linter. Clean your debug messages.
 
+## Code Review and Pull Request Process
+To ensure an efficient workflow, please follow these guidelines when working with Pull Requests (PRs):
+
+### Approved PRs
+If your PR is marked as "approved", it means that I do not wish to review it again. In most cases, these are only minor comments that do not require further discussion. The process should be as follows:
+
+Review all comments:
+- If you agree with a comment and implement the suggested change, click "Resolve".
+- If you disagree, reply directly to the comment explaining why the original solution is preferable.
+- After addressing all comments, merge the PR and delete the branch.
+
+All relevant information and discussions will remain available on GitHub for future reference.
+
+### Non-Approved PRs
+If the PR is not approved, it means there are some points that must be revised. In such cases:
+- The requested changes are considered necessary and must be either implemented (in which case I will review the updated code), or
+- We should discuss the matter and agree on a suitable compromise.
+
+This process is designed to streamline collaboration while ensuring code quality. Please follow it consistently.
+
 # Tags
 Tags should be used for every realeased version and equipped with describing commit message.
 Tag name could have prefix (e.g. stable, dev, ...) and must have [version number](https://semver.org)
